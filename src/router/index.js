@@ -23,6 +23,10 @@ export default new Router({
           component: () => import("../pages/mine/Mine.vue")
         }
       ]
+    },
+    {
+      path: "/serach",
+      component: () => import("../pages/serach/Serach.vue")
     }
   ]
 });

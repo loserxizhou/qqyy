@@ -5,6 +5,8 @@ import App from "./App";
 import router from "./router";
 import Vant from "vant";
 import "vant/lib/index.css";
+import store from "./store";
+import "./assets/style/reset.css";
 
 Vue.use(Vant);
 Vue.config.productionTip = false;
@@ -16,5 +18,6 @@ new Vue({
   components: {
     App
   },
+  store,
   template: "<App/>"
 });
