@@ -5,12 +5,10 @@ Vue.use(Router);
 
 export default new Router({
   mode: "history", // h5模式
-  routes: [
-    {
+  routes: [{
       path: "/",
       component: Tabber,
-      children: [
-        {
+      children: [{
           path: "/home",
           component: () => import("../pages/home/Home.vue")
         },
@@ -23,6 +21,10 @@ export default new Router({
           component: () => import("../pages/mine/Mine.vue")
         }
       ]
+    },
+    {
+      path: "/listDetails",
+      component: () => import("../pages/listDetails/listDetails.vue")
     }
   ]
 });
