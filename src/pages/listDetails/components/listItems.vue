@@ -1,6 +1,7 @@
 <template>
   <div>
-    <p class="topText">推荐歌单</p>
+    <van-nav-bar class="navbar" :fixed='true' title="推荐歌单" left-text="返回" left-arrow
+      @click-left="$router.push('/home')" />
     <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
       <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
 
@@ -42,14 +43,20 @@ export default {
   },
 };
 </script>
+<style lang="less">
+.navbar {
+  background-color: #d43c33;
+  .van-nav-bar__title,
+  .van-nav-bar__arrow::before,
+  .van-nav-bar__text {
+    color: #fefefe;
+  }
+}
+</style>
 
 <style lang="less" scoped>
-.topText {
-  margin: 0;
-  padding: 4.1vw 0 4.1vw 1vw;
-  font-size: 4.1vw;
-  color: #fefefe;
-  background-color: #eb4d4b;
+.van-list {
+  margin-top: 10.7vw;
 }
 .van-grid-item {
   p {

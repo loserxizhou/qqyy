@@ -25,6 +25,10 @@ export default new Router({
     {
       path: "/listDetails",
       component: () => import("../pages/listDetails/listDetails.vue")
+    },
+    {
+      path: "/songDetails",
+      component: () => import("../pages/songDetails/songDetails.vue")
     }
   ]
 });

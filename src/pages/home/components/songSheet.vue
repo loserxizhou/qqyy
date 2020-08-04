@@ -17,7 +17,9 @@ export default {};
 <style lang="less" scoped>
 .van-grid-item {
   p {
-    font-size: 1.733vw;
+    color: #333333;
+    margin-top: 1vw;
+    font-size: 3.2vw;
     width: 24vw;
     overflow: hidden; /*溢出隐藏*/
     text-overflow: ellipsis; /*文本溢出 显示省略号*/
@@ -30,7 +32,7 @@ export default {};
   }
   .van-image {
     height: 26vw;
-    border-radius: 2.5vw;
+    border-radius: 3vw;
     overflow: hidden;
   }
 }

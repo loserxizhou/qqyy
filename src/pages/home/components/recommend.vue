@@ -2,7 +2,7 @@
   <div class="songsItem">
     <p>
       <span>最新音乐</span>
-      <span>查看更多></span>
+      <span @click="$router.push('/songDetails')">查看更多></span>
     </p>
     <single-item></single-item>
   </div>
