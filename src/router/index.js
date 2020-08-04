@@ -25,8 +25,16 @@ export default new Router({
       ]
     },
     {
+      path: "/listDetails",
+      component: () => import("../pages/listDetails/listDetails.vue")
+    },
+    {
       path: "/serach",
       component: () => import("../pages/serach/Serach.vue")
+    },
+    {
+      path: "/login",
+      component: () => import("../pages/login/Login")
     }
   ]
 });
