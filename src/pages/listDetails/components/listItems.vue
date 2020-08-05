@@ -6,7 +6,7 @@
       <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
 
       <van-grid :border="false" :column-num="3" :gutter="4">
-        <van-grid-item v-for="value in list" :key="value">
+        <van-grid-item v-for="value in list" to="/songContent" :key="value">
           <van-image fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
           <p>高合金钢合金钢脚后跟呱呱呱呱呱呱呱呱呱呱呱呱呱呱呱呱呱呱</p>
         </van-grid-item>

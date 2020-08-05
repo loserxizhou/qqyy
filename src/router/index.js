@@ -29,6 +29,14 @@ export default new Router({
     {
       path: "/songDetails",
       component: () => import("../pages/songDetails/songDetails.vue")
+    },
+    {
+      path: "/songContent",
+      component: () => import("../pages/songContent/songContent.vue")
+    },
+    {
+      path: "/play",
+      component: () => import("../pages/play/play.vue")
     }
   ]
 });
