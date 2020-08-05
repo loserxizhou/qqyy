@@ -2,7 +2,6 @@
   <div class="body">
     <router-link to="/serach">
       <van-search
-        v-model="value"
         shape="round"
         background="#f7f7f7"
         class="serach"
@@ -10,27 +9,55 @@
       />
     </router-link>
     <user-card></user-card>
+    <div class="btn">
+      <van-button
+        type="primary"
+        color="#eb4d4b"
+        @click="mylogout"
+      >退出登陆</van-button>
+    </div>
   </div>
 </template>
 
 <script>
 import UserCard from "./components/UserCard";
+import { mapMutations } from "vuex";
 export default {
   name: "Mine",
-  components: {
-    UserCard
+  methods: {
+    mylogout: function () {
+      console.log("logout");
+      //清除本地数据
+      localStorage.clear();
+      //清除vuex数据
+      this.logout();
+      //返回主页，路由守卫会返回到login
+      this.$router.push({ path: "/" });
+    },
+    ...mapMutations(["logout"]),
   },
-  methods: {}
+  components: {
+    UserCard,
+  },
 };
 </script>
 
 <style lang="stylus" scoped>
 .body
-    background #f7f7f7
-    height 10rem
-    padding-top .4rem
-    .serach
-        margin-bottom .5rem
-    .serach >>> .van-search__content
-        background-color #fff
+  background: #f7f7f7
+  height: 10rem
+  padding-top: 0.4rem
+  .serach
+    margin-bottom: 0.5rem
+  .serach >>> .van-search__content
+    background-color: #fff
+  .btn
+    width: 100%
+    display: flex
+    justify-content: center
+    margin-top: 0.4rem
+    .van-button
+      width: 6rem
+      height: 0.8rem
+      border-radius: 0.4rem
 </style>

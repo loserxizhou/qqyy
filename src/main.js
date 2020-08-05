@@ -2,9 +2,9 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from "vue";
 import App from "./App";
-import router from "./router";
+import router from "./router/permission";
 import Vant from "vant";
-import './assets/iconfont/iconfont.css'
+import "./assets/iconfont/iconfont.css";
 import "vant/lib/index.css";
 import store from "./store";
 import "./assets/style/reset.css";
@@ -14,11 +14,7 @@ Vue.config.productionTip = false;
 
 /* eslint-disable no-new */
 new Vue({
-  el: "#app",
   router,
-  components: {
-    App
-  },
   store,
-  template: "<App/>"
-});
+  render: h => h(App)
+}).$mount("#app");
