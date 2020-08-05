@@ -37,6 +37,13 @@ export default new Router({
     {
       path: "/play",
       component: () => import("../pages/play/play.vue")
+    }, {
+      path: "/serach",
+      component: () => import("../pages/serach/Serach.vue")
+    },
+    {
+      path: "/login",
+      component: () => import("../pages/login/Login")
     }
   ]
 });
