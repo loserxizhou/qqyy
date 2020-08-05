@@ -32,7 +32,7 @@ export default {
       //清除vuex数据
       this.logout();
       //返回主页，路由守卫会返回到login
-      this.$router.push({ path: "/" });
+      this.$router.push("/login");
     },
     ...mapMutations(["logout"]),
   },

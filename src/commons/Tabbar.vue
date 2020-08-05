@@ -2,6 +2,7 @@
   <div>
     <router-view />
 
+    <bottom-music></bottom-music>
     <van-tabbar
       route
       v-model="active"
@@ -36,11 +37,15 @@
 </template>
 
 <script>
+import BottomMusic from "./BottomMusic";
 export default {
   data() {
     return {
       active: "home",
     };
+  },
+  components: {
+    BottomMusic,
   },
 };
 </script>

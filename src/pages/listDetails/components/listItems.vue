@@ -1,55 +1,70 @@
 <template>
   <div>
-    <p class="topText">推荐歌单</p>
-    <van-list v-model="loading" :finished="finished" finished-text="没有更多了" @load="onLoad">
+    <van-nav-bar
+      class="navbar"
+      :fixed='true'
+      title="推荐歌单"
+      left-text="返回"
+      left-arrow
+      @click-left="$router.push('/home')"
+    />
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="没有更多了"
+      @load="onLoad"
+    >
       <!-- <van-cell v-for="item in list" :key="item" :title="item" /> -->
 
-      <van-grid :border="false" :column-num="3" :gutter="4">
-        <van-grid-item v-for="value in list" :key="value">
-          <van-image fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-          <p>高合金钢合金钢脚后跟呱呱呱呱呱呱呱呱呱呱呱呱呱呱呱呱呱呱</p>
-        </van-grid-item>
-      </van-grid>
+      <song-sheet :groupList="this.groupList"></song-sheet>
     </van-list>
   </div>
 </template>
 
 <script>
+import songSheet from "../../home/components/songSheet";
+import { MusicApiService } from "../../../api/music/musicApiService";
 export default {
   data() {
     return {
       list: [],
       loading: false,
       finished: false,
+      groupList: [],
     };
+  },
+  components: {
+    songSheet,
   },
   methods: {
     onLoad() {
       // 异步更新数据
       // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-      setTimeout(() => {
-        for (let i = 0; i < 15; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        // 加载状态结束
-        this.loading = false;
-        // 数据全部加载完成
-        if (this.list.length >= 48) {
-          this.finished = true;
-        }
-      }, 1000);
+      this.getGroupList();
+    },
+    getGroupList: function () {
+      MusicApiService.getHomeGroup().then((res) => {
+        console.log(res);
+        this.groupList = res.results;
+      });
     },
   },
 };
 </script>
+<style lang="less">
+.navbar {
+  background-color: #d43c33;
+  .van-nav-bar__title,
+  .van-nav-bar__arrow::before,
+  .van-nav-bar__text {
+    color: #fefefe;
+  }
+}
+</style>
 
 <style lang="less" scoped>
-.topText {
-  margin: 0;
-  padding: 4.1vw 0 4.1vw 1vw;
-  font-size: 4.1vw;
-  color: #fefefe;
-  background-color: #eb4d4b;
+.van-list {
+  margin-top: 10.7vw;
 }
 .van-grid-item {
   p {

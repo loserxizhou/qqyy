@@ -8,6 +8,18 @@ export class UserApi {
   //注册
   sign(username, password) {
     return request({
+      url: "/api/user/sign/",
+      method: "post",
+      data: {
+        username: username,
+        password: password
+      }
+    });
+  }
+
+  //登陆
+  login(username, password) {
+    return request({
       url: "/api/user/login/",
       method: "post",
       data: {

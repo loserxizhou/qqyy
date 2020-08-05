@@ -48,23 +48,25 @@ export default {
       this.$router.go(-1); //返回上一层
     },
     sign: function () {
+      //首先注册，如果用户已经存在就直接登陆
       UserApiService.sign(this.username, this.password).then((res) => {
-        console.log(res);
-        //登陆成功
-        var token = res.access;
-        var refresh = res.refresh;
-        var user_id = res.user_id;
-        var username = res.username;
-        //本地存储
-        localStorage.setItem("token", token);
-        localStorage.setItem("refresh", refresh);
-        localStorage.setItem("user_id", user_id);
-        localStorage.setItem("username", username);
+        UserApiService.login(this.username, this.password).then((res) => {
+          //登陆成功
+          var token = res.access;
+          var refresh = res.refresh;
+          var user_id = res.user_id;
+          var username = res.username;
+          //本地存储
+          localStorage.setItem("token", token);
+          localStorage.setItem("refresh", refresh);
+          localStorage.setItem("user_id", user_id);
+          localStorage.setItem("username", username);
 
-        //vuex存储
-        this.login(token, refresh, user_id, username);
-        //跳转到首页
-        this.$router.push({ path: "/home" });
+          //vuex存储
+          this.login(token, refresh, user_id, username);
+          //跳转到首页
+          this.$router.push({ path: "/home" });
+        });
       });
     },
     ...mapMutations(["login"]),

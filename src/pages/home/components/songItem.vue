@@ -4,7 +4,7 @@
       <span>推荐歌单</span>
       <span @click="$router.push('/listDetails')">查看更多></span>
     </p>
-    <song-sheet></song-sheet>
+    <song-sheet :groupList="this.groupList"></song-sheet>
   </div>
 
 </template>
@@ -15,6 +15,12 @@ export default {
   components: {
     songSheet,
   },
+  props: {
+    groupList: {
+      type: Array,
+      defalut: [],
+    },
+  },
 };
 </script>
 
@@ -22,7 +28,8 @@ export default {
 p {
   margin-top: 2vw;
   display: flex;
-  padding-left: 0.667vw;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
   border-left: 0.5vw solid red;
   justify-content: space-between;
   span:nth-of-type(1) {

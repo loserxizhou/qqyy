@@ -2,7 +2,7 @@
   <div class="songsItem">
     <p>
       <span>最新音乐</span>
-      <span>查看更多></span>
+      <span @click="$router.push('/songDetails')">查看更多></span>
     </p>
     <single-item></single-item>
   </div>
@@ -20,12 +20,15 @@ export default {
 <style lang="less" scoped>
 p {
   margin: 0;
-  padding: 0;
+  padding-left: 0.3rem;
+  padding-right: 0.3rem;
+}
+.songsItem {
+  margin-top: 0.3rem;
 }
 .songsItem > p {
   margin: 2vw 0 3.75vw 0;
   display: flex;
-  padding-left: 0.667vw;
   border-left: 0.5vw solid red;
   justify-content: space-between;
   span:nth-of-type(1) {

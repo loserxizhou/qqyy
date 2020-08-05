@@ -44,6 +44,18 @@ export default new Router({
       component: () => import("../pages/listDetails/listDetails.vue")
     },
     {
+      path: "/songDetails",
+      component: () => import("../pages/songDetails/songDetails.vue")
+    },
+    {
+      path: "/songContent",
+      component: () => import("../pages/songContent/songContent.vue")
+    },
+    {
+      path: "/play",
+      component: () => import("../pages/play/play.vue")
+    },
+    {
       path: "/serach",
       meta: {
         isLogin: true
