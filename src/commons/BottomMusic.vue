@@ -1,5 +1,9 @@
 <template>
-  <div class="music_bom">
+  <div
+    class="music_bom"
+    v-if="total != 0 && !isMusicPage"
+    @click="toPlay"
+  >
     <div class="img">
       <van-image
         class='imgRunning'
@@ -10,26 +14,96 @@
       />
     </div>
     <div class="music_name">
-      <div class="name">东风破-周杰伦</div>
+      <div
+        class="name"
+        v-if="index == -1"
+      >{{music_list[0].music_name}}-{{music_list[0].author}}</div>
+      <div
+        class="name"
+        v-else
+      >{{music_list[index].music_name}}-{{music_list[index].author}}</div>
     </div>
     <div class="stop">
       <van-icon
         name="play"
         size=".4rem"
         color="#fff"
+        v-if="!play"
+        @click.stop="playmusic"
+      />
+      <van-icon
+        name="pause"
+        size=".4rem"
+        color="#fff"
+        v-else
+        @click.stop="stopmusic"
       />
     </div>
     <van-icon
       name="ascending"
       size=".5rem"
       color="#fff"
+      @click.stop="showPop"
     />
   </div>
 </template>
 
 <script>
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
   name: "BottomMusic",
+  data: function () {
+    return {};
+  },
+  computed: {
+    ...mapState([
+      "play",
+      "music_list",
+      "index",
+      "audio",
+      "total",
+      "currentTime",
+      "isMusicPage",
+    ]),
+  },
+  methods: {
+    playmusic() {
+      if (this.index == -1) {
+        this.audio.src = "http://xiexizhou.top/" + this.music_list[0].music;
+        this.playAudio({
+          audio: this.audio,
+          timer: this.timer,
+          currentTime: this.currentTime,
+        });
+        this.setIndex(0);
+      } else {
+        this.audio.src =
+          "http://xiexizhou.top/" + this.music_list[this.index].music;
+        this.playAudio({
+          audio: this.audio,
+          timer: this.timer,
+          currentTime: this.currentTime,
+        });
+      }
+    },
+    toPlay() {
+      this.$router.push({
+        path: "/play",
+        params: { music_id: this.music_list[this.index].id },
+      });
+    },
+    stopmusic() {
+      this.stopAudio(this.audio);
+    },
+    showPop: function () {
+      this.$emit("changeShow");
+    },
+    ...mapActions(["playAudio", "stopAudio"]),
+    ...mapMutations(["setIndex"]),
+  },
+  mounted: function () {
+    console.log(this.play);
+  },
 };
 </script>
 

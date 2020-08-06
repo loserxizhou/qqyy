@@ -1,20 +1,38 @@
 <template>
   <div>
-    <van-nav-bar class="navbar" :fixed='true' title="歌单" left-text="返回" left-arrow @click-left="$router.go(-1)" />
+    <van-nav-bar
+      class="navbar"
+      :fixed='true'
+      title="歌单"
+      left-text="返回"
+      left-arrow
+      @click-left="$router.go(-1)"
+    />
     <div class="content">
-      <van-image fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      <p>歌单名称</p>
-      <van-image fit="cover" round src="https://img.yzcdn.cn/vant/cat.jpeg" />
-      <p>歌单创建人</p>
+      <van-image
+        fit="cover"
+        :src="group_image"
+      />
+      <p>{{group_name}}</p>
+      <p>{{username}}</p>
       <p>歌单简介:啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
     </div>
 
-    <van-list v-model="loading" :finished="finished" finished-text="已经到底了" @load="onLoad">
-      <van-cell v-for="item in list" :key="item">
+    <van-list
+      v-model="loading"
+      :finished="finished"
+      finished-text="已经到底了"
+      @load="onLoad"
+    >
+      <van-cell
+        v-for="(item,i) in list"
+        :key="item.id"
+        @click="toplay(i)"
+      >
         <div class="songs">
           <div class="songsinfo">
-            <p>歌曲名</p>
-            <p>歌手</p>
+            <p>{{item.music_name}}</p>
+            <p>{{item.author}}</p>
           </div>
           <span class="bofangicon iconfont icon-bofang"></span>
         </div>
@@ -24,30 +42,107 @@
 </template>
 
 <script>
+import { MusicApiService } from "../../../api/music/musicApiService";
+import { mapMutations, mapState, mapActions } from "vuex";
 export default {
   data() {
     return {
       list: [],
       loading: false,
       finished: false,
+      page: 1,
+      size: 10,
     };
   },
+  props: {
+    group_id: {
+      type: Number,
+      default: 1,
+    },
+    group_name: {
+      type: String,
+      default: "",
+    },
+    group_image: {
+      type: String,
+      default: "",
+    },
+    username: {
+      type: String,
+      default: "",
+    },
+  },
+  computed: {
+    ...mapState([
+      "music_list",
+      "audio",
+      "timer",
+      "currentTime",
+      "play",
+      "index",
+    ]),
+  },
   methods: {
+    getMusicList: function () {
+      MusicApiService.getMusicListByGroupId(this.group_id).then((res) => {
+        this.musicList = res.results;
+      });
+    },
+    toplay: function (index_s) {
+      this.$router.push({
+        path: "/play",
+        params: { music_id: this.list[index_s].id },
+      });
+      if (!this.play && index_s != this.index) {
+        //获取当前的歌曲信息
+        var music = this.list[index_s];
+        //播放歌曲
+        var url = "http://xiexizhou.top/" + music.music;
+        this.audio.src = url;
+        this.playAudio({
+          audio: this.audio,
+          timer: this.timer,
+          currentTime: this.currentTime,
+          url,
+        });
+        this.setIndex(index_s);
+      }
+      //正在播放歌曲时切换其他歌曲
+      if (this.play && index_s != this.index) {
+        //获取当前的歌曲信息
+        var music = this.list[index_s];
+        //播放歌曲
+        var url = "http://xiexizhou.top/" + music.music;
+        this.audio.src = url;
+        this.playAudio({
+          audio: this.audio,
+          timer: this.timer,
+          currentTime: this.currentTime,
+          url,
+        });
+        this.setIndex(index_s);
+      }
+    },
     onLoad() {
       // 异步更新数据
-      // setTimeout 仅做示例，真实场景中一般为 ajax 请求
-      setTimeout(() => {
-        for (let i = 0; i < 10; i++) {
-          this.list.push(this.list.length + 1);
-        }
-        // 加载状态结束
+      MusicApiService.getMusicListByGroupId(
+        this.group_id,
+        this.page,
+        this.size
+      ).then((res) => {
+        this.page++;
+        console.log(res);
+        this.list = res.results;
         this.loading = false;
-        // 数据全部加载完成
-        if (this.list.length >= 20) {
+        if (res.next == null) {
           this.finished = true;
         }
-      }, 1000);
+        //请求数据后将歌单添加到vuex
+        this.addGroup(this.list);
+      });
     },
+    ...mapMutations(["addGroup", "setIndex", "changePageFlag"]),
+    ...mapActions(["playAudio"]),
   },
 };
 </script>

@@ -7,5 +7,16 @@ export default {
   token: defaultToken,
   refresh: defaultRefresh,
   user_id: defaultUserid,
-  username: defaultUsername
+  username: defaultUsername,
+  music_list: [],
+  music_index: 0,
+  music_url: "",
+  play: false,
+  audio: new Audio(),
+  timeLength: 0,
+  currentTime: 0.0,
+  timer: null,
+  index: -1,
+  total: 0,
+  isMusicPage: false
 };

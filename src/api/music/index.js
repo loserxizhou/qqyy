@@ -23,6 +23,21 @@ export class MusicApi {
     });
   }
 
+  //首页音乐
+  getAllMusic(page = 1, size = 10) {
+    return request({
+      url: this.baseUrl + "api/allmusic/",
+      method: "get",
+      headers: {
+        Authorization: "Bearer " + store.getters["token"]
+      },
+      params: {
+        page: page,
+        size: size
+      }
+    });
+  }
+
   //上传音乐
   upload(music_info) {
     return request({
@@ -125,6 +140,14 @@ export class MusicApi {
       headers: {
         Authorization: "Bearer " + store.getters["token"]
       }
+    });
+  }
+
+  //请求一条MP3文件
+  getMusic(url) {
+    return request({
+      url: url,
+      method: "get"
     });
   }
 }

@@ -20,7 +20,7 @@
     <div class="songsname">
       <van-notice-bar
         scrollable
-        text="歌的名字有点长"
+        :text="music_list[index].music_name"
       />
       <p>歌手名字</p>
     </div>
@@ -40,10 +40,9 @@
       </div>
       <!-- audio -->
       <audio
-        id="myAudio"
-        src="http://xiexizhou.top/media/xizhou/%E7%88%B1%E5%9C%A8%E8%A5%BF%E5%85%83%E5%89%8D.mp3"
-      >
-      </audio>
+        class="myAudio"
+        ref="myAudio"
+      />
       <!-- 暂停,播放等 -->
       <div class="audiobottom">
         <van-image
@@ -58,19 +57,20 @@
         />
         <van-icon
           v-if="showicon"
-          @click="bofang"
+          @click="playmusic('http://xiexizhou.top/'+music_list[index].music)"
           class="mid"
           name="play-circle-o"
         />
         <van-icon
           v-else
           class="mid"
-          @click="bofang"
+          @click="stopmusic"
           name="pause-circle-o"
         />
         <van-icon
           class="right"
           name="arrow"
+          @click="nextMusic"
         />
       </div>
     </div>
@@ -78,12 +78,14 @@
 </template>
 
 <script>
+import { MusicApiService } from "../../../api/music/musicApiService";
+import { mapActions, mapState, mapMutations } from "vuex";
 export default {
   data() {
     return {
       className: "imgRunning",
       percentage: "50",
-      showicon: true,
+      showicon: false,
       cimg: 0,
       imgList: [
         require("../../../assets/suiji.png"),
@@ -92,10 +94,17 @@ export default {
       ],
     };
   },
+  computed: {
+    ...mapState([
+      "audio",
+      "timer",
+      "currentTime",
+      "music_list",
+      "index",
+      "total",
+    ]),
+  },
   methods: {
-    bofang() {
-      this.showicon = !this.showicon;
-    },
     imgchange() {
       if (this.cimg % 3 == 0) {
         // this.$refs.imgsrc.src = "../../../assets/suiji.png";
@@ -108,6 +117,42 @@ export default {
         this.cimg = 0;
       }
     },
+    nextMusic() {
+      //切换下一首歌，首先获取下一首歌的url
+      console.log(this.index + "下一首" + this.total);
+      if (this.index == this.total - 1) {
+        var url = this.music_list[0].music;
+        this.playmusic(url);
+        this.setIndex(0);
+      } else {
+        var url = this.music_list[this.index + 1].music;
+        this.playmusic(url);
+        this.setIndex(this.index + 1);
+      }
+    },
+    playmusic: function (url) {
+      this.showicon = false;
+      this.audio.src = url;
+      this.playAudio({
+        audio: this.audio,
+        timer: this.timer,
+        currentTime: this.currentTime,
+        url,
+      });
+    },
+    stopmusic: function () {
+      this.showicon = true;
+      this.stopAudio(this.audio);
+    },
+    ...mapActions(["playAudio", "stopAudio"]),
+    ...mapMutations(["setIndex", "changePageFlag", "delPageFlag"]),
+  },
+  mounted: function () {
+    this.changePageFlag();
+  },
+  beforeDestroy: function () {
+    console.log("delPageFlag");
+    this.delPageFlag();
   },
 };
 </script>

@@ -16,6 +16,13 @@ module.exports = {
         pathRewrite: {
           "^/api": "/api"
         }
+      },
+      "/media": {
+        target: "http://xiexizhou.top",
+        changeOrigin: true,
+        pathRewrite: {
+          "^/media": "/media"
+        }
       }
     },
 

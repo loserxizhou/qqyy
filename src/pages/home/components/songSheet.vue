@@ -1,13 +1,14 @@
 <template>
   <div class="sheet">
-    <div
+    <router-link
       v-for="(item,index) in groupList"
       :key="index"
       class="item"
+      :to="'/songContent?group_id='+item.id +'&group_name='+item.group_info.group_name+'&group_image='+item.group_info.group_image+'&username='+item.group_info.username"
     >
       <van-image :src="'http://xiexizhou.top/'+item.group_info.group_image" />
       <div class="p">{{item.group_info.group_name}}</div>
-    </div>
+    </router-link>
   </div>
 </template>
 
@@ -20,7 +21,7 @@ export default {
     },
   },
   mounted: function () {
-    console.log(this.groupList);
+    // console.log(this.groupList);
   },
 };
 </script>

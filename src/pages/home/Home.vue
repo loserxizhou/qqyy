@@ -38,7 +38,6 @@ export default {
   methods: {
     getGroupList: function () {
       MusicApiService.getHomeGroup().then((res) => {
-        console.log(res);
         this.groupList = res.results;
       });
     },
