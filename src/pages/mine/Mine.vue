@@ -1,26 +1,19 @@
 <template>
   <div class="body">
     <router-link to="/serach">
-      <van-search
-        shape="round"
-        background="#f7f7f7"
-        class="serach"
-        placeholder="请输入搜索关键词"
-      />
+      <van-search shape="round" background="#f7f7f7" class="serach" placeholder="请输入搜索关键词" />
     </router-link>
     <user-card></user-card>
+    <gedan></gedan>
     <div class="btn">
-      <van-button
-        type="primary"
-        color="#eb4d4b"
-        @click="mylogout"
-      >退出登陆</van-button>
+      <van-button type="primary" color="#eb4d4b" @click="mylogout">退出登陆</van-button>
     </div>
   </div>
 </template>
 
 <script>
 import UserCard from "./components/UserCard";
+import gedan from "./components/gedan";
 import { mapMutations } from "vuex";
 export default {
   name: "Mine",
@@ -38,6 +31,7 @@ export default {
   },
   components: {
     UserCard,
+    gedan,
   },
 };
 </script>

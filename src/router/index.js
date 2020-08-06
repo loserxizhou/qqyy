@@ -5,15 +5,13 @@ Vue.use(Router);
 
 export default new Router({
   mode: "history", // h5模式
-  routes: [
-    {
+  routes: [{
       path: "/",
       component: Tabber,
       meta: {
         isLogin: true
       },
-      children: [
-        {
+      children: [{
           path: "/home",
           meta: {
             isLogin: true
@@ -69,6 +67,18 @@ export default new Router({
     {
       path: "/login_lead",
       component: () => import("../pages/login/LoginLead")
+    }, {
+      path: "/mySongsList",
+      component: () => import("../pages/mySongsList/mySongsList.vue")
+    }, {
+      path: "/songspage",
+      component: () => import("../pages/mySongsList/songsPage.vue")
+    }, {
+      path: "/collection",
+      component: () => import("../pages/Collection/collection.vue")
+    }, {
+      path: "/update",
+      component: () => import("../pages/update/update.vue")
     }
   ]
 });

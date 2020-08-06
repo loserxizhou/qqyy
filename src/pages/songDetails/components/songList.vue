@@ -1,7 +1,6 @@
 <template>
   <div>
-    <van-nav-bar class="navbar" :fixed='true' title="最新音乐" left-text="返回" left-arrow
-      @click-left="$router.push('/home')" />
+    <van-nav-bar class="navbar" :fixed='true' title="音乐" left-text="返回" left-arrow @click-left="$router.go(-1)" />
     <van-image fit="cover" src="https://img.yzcdn.cn/vant/cat.jpeg" />
     <van-list v-model="loading" :finished="finished" finished-text="已经到底了" @load="onLoad">
       <van-cell v-for="item in list" :key="item">
