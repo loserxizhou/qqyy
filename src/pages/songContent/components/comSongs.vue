@@ -15,7 +15,7 @@
       />
       <p>{{group_name}}</p>
       <p>{{username}}</p>
-      <p>歌单简介:啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</p>
+      <p>歌单简介:简介</p>
     </div>
 
     <van-list
@@ -125,6 +125,8 @@ export default {
     },
     onLoad() {
       // 异步更新数据
+      console.log("00000000000");
+      console.log(this.group_id);
       MusicApiService.getMusicListByGroupId(
         this.group_id,
         this.page,

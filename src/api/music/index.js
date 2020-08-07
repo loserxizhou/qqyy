@@ -51,12 +51,16 @@ export class MusicApi {
   }
 
   //分页查询我所有的歌单
-  getAllMyGroup() {
+  getAllMyGroup(page = 1, size = 10) {
     return request({
       url: this.baseUrl + "api/my/group/",
       method: "get",
       headers: {
         Authorization: "Bearer " + store.getters["token"]
+      },
+      params: {
+        page: page,
+        size: size
       }
     });
   }
@@ -76,7 +80,7 @@ export class MusicApi {
   }
 
   //删除歌单
-  createGroup(group_id) {
+  deleteGroup(group_id) {
     return request({
       url: this.baseUrl + "api/my/group/",
       method: "delete",

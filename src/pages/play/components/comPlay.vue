@@ -1,5 +1,18 @@
 <template>
   <div class="outdiv">
+    <!-- 歌手和歌名 -->
+    <van-icon
+      class="fanhui"
+      @click="$router.go(-1)"
+      name="arrow-left"
+    />
+    <div class="songsname">
+      <van-notice-bar
+        scrollable
+        :text="music_list[index].music_name"
+      />
+      <p>{{music_list[index].author}}</p>
+    </div>
     <!-- 转圈这个 -->
     <div class="playTop">
       <div class="outimg">
@@ -16,14 +29,6 @@
         </div>
       </div>
     </div>
-    <!-- 歌手和歌名 -->
-    <div class="songsname">
-      <van-notice-bar
-        scrollable
-        :text="music_list[index].music_name"
-      />
-      <p>歌手名字</p>
-    </div>
     <!-- audio控制组件 -->
     <div class="audioContent">
       <!-- 进度条 -->
@@ -33,24 +38,14 @@
           color="#fefefe"
           stroke-width="4px"
           track-color="#bfbfbf"
-          :percentage="percentage"
+          :percentage="parseInt((currentTime/timeLength)*100)"
         />
-        <span>01:01</span>
-        <span>03:54</span>
+        <span>{{formatSeconds(currentTime)}}</span>
+        <span>{{formatSeconds(timeLength)}}</span>
       </div>
       <!-- audio -->
-      <audio
-        class="myAudio"
-        ref="myAudio"
-      />
       <!-- 暂停,播放等 -->
       <div class="audiobottom">
-        <van-image
-          ref="imgsrc"
-          class="changeimg"
-          :src="imgList[cimg]"
-          @click="imgchange"
-        />
         <van-icon
           class="left"
           name="arrow-left"
@@ -102,6 +97,7 @@ export default {
       "music_list",
       "index",
       "total",
+      "timeLength",
     ]),
   },
   methods: {
@@ -146,6 +142,27 @@ export default {
     },
     ...mapActions(["playAudio", "stopAudio"]),
     ...mapMutations(["setIndex", "changePageFlag", "delPageFlag"]),
+    formatSeconds(value) {
+      let result = parseInt(value);
+      let h =
+        Math.floor(result / 3600) < 10
+          ? "0" + Math.floor(result / 3600)
+          : Math.floor(result / 3600);
+      let m =
+        Math.floor((result / 60) % 60) < 10
+          ? "0" + Math.floor((result / 60) % 60)
+          : Math.floor((result / 60) % 60);
+      let s =
+        Math.floor(result % 60) < 10
+          ? "0" + Math.floor(result % 60)
+          : Math.floor(result % 60);
+
+      let res = "";
+      if (h !== "00") res += `${h}h`;
+      if (m !== "00") res += `${m}:`;
+      res += `${s}`;
+      return res;
+    },
   },
   mounted: function () {
     this.changePageFlag();
@@ -163,6 +180,15 @@ export default {
   width: 100%;
   height: 100%;
   background-image: linear-gradient(#f19cc7, #757575);
+}
+
+// 返回按钮
+.fanhui {
+  position: absolute;
+  top: 4vw;
+  left: 2vw;
+  font-size: 6vw;
+  color: #fefefe;
 }
 
 // 转圈这个
@@ -226,7 +252,7 @@ export default {
     margin-top: 3%;
     height: 20%;
     font-size: 4vw;
-    color: rgb(177, 175, 175);
+    color: rgb(134, 133, 133);
   }
 }
 
@@ -240,17 +266,17 @@ export default {
     .van-progress {
       position: absolute;
       left: 10%;
-      top: 60%;
+      top: 80%;
       width: 80%;
     }
     span:nth-of-type(1) {
       position: absolute;
-      top: 65%;
+      top: 86%;
       left: 10%;
     }
     span:nth-of-type(2) {
       position: absolute;
-      top: 65%;
+      top: 86%;
       right: 10%;
     }
   }
@@ -263,26 +289,26 @@ export default {
     position: relative;
     .changeimg {
       position: absolute;
-      width: 8vw;
-      height: 8vw;
-      top: 23%;
+      width: 6vw;
+      height: 6vw;
+      top: 40%;
       left: 5%;
     }
     .van-icon {
       position: absolute;
-      font-size: 10vw;
+      font-size: 8vw;
       color: #fefefe;
     }
     .left {
-      top: 20%;
+      top: 38%;
       left: 20%;
     }
     .mid {
-      top: 20%;
+      top: 38%;
       left: 45%;
     }
     .right {
-      top: 20%;
+      top: 38%;
       left: 70%;
     }
   }

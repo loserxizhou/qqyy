@@ -9,6 +9,7 @@
       />
     </router-link>
     <user-card></user-card>
+    <gedan></gedan>
     <div class="btn">
       <van-button
         type="primary"
@@ -21,6 +22,7 @@
 
 <script>
 import UserCard from "./components/UserCard";
+import gedan from "./components/gedan";
 import { mapMutations } from "vuex";
 export default {
   name: "Mine",
@@ -38,6 +40,7 @@ export default {
   },
   components: {
     UserCard,
+    gedan,
   },
 };
 </script>

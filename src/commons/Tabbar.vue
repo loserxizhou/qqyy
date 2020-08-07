@@ -18,7 +18,7 @@
         name="rank"
         replace
         to="/rank"
-        icon="search"
+        icon="bar-chart-o"
       >
         排行
       </van-tabbar-item>
